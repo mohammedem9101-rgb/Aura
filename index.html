@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aura — أثاث دمياطي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B211A;
+    --olive:#37432F;
+    --olive-soft:#5A6B4E;
+    --brass:#9C7A2E;
+    --brass-lit:#C39B45;
+    --ivory:#F3F0E6;
+    --sand:#E2DAC7;
+    --line:rgba(27,33,26,.16);
+    --card:#FBF9F3;
+    --bg:var(--ivory);
+    --fg:var(--ink);
+    --muted:#6A6B5F;
+    --shadow:0 18px 40px -28px rgba(27,33,26,.65);
+    --wood-1:#8A6134;
+    --wood-2:#6B4826;
+    --fabric:#7C8A6E;
+    --metal:#C39B45;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F0EDE2; --olive:#C6D2B8; --olive-soft:#9FAE92;
+      --brass:#D2AB57; --brass-lit:#E6C478;
+      --ivory:#15180F; --sand:#242819; --line:rgba(240,237,226,.18);
+      --card:#1D2116; --bg:#15180F; --fg:#F0EDE2; --muted:#A5A695;
+      --shadow:0 18px 40px -28px rgba(0,0,0,.9);
+      --wood-1:#A97B46; --wood-2:#7E5730; --fabric:#8FA07F; --metal:#D9B45F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F0EDE2; --olive:#C6D2B8; --olive-soft:#9FAE92;
+    --brass:#D2AB57; --brass-lit:#E6C478;
+    --ivory:#15180F; --sand:#242819; --line:rgba(240,237,226,.18);
+    --card:#1D2116; --bg:#15180F; --fg:#F0EDE2; --muted:#A5A695;
+    --shadow:0 18px 40px -28px rgba(0,0,0,.9);
+    --wood-1:#A97B46; --wood-2:#7E5730; --fabric:#8FA07F; --metal:#D9B45F;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+    font-size:17px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Amiri",Georgia,serif; font-weight:700; line-height:1.25; margin:0}
+  a{color:inherit}
+  img,svg{max-width:100%}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 20px}
+  :focus-visible{outline:2px solid var(--brass); outline-offset:3px; border-radius:4px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .bar{display:flex; align-items:center; gap:18px; padding:14px 0}
+  .logo{display:flex; align-items:center; gap:10px; font-family:"Amiri",serif; font-size:22px; font-weight:700; text-decoration:none; white-space:nowrap}
+  .logo span{color:var(--brass)}
+  nav{display:flex; gap:22px; margin-inline-start:auto; font-size:15.5px}
+  nav a{text-decoration:none; color:var(--muted); padding:4px 0; border-bottom:1.5px solid transparent}
+  nav a:hover{color:var(--fg); border-bottom-color:var(--brass)}
+  .cart-btn{
+    display:flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--card);
+    color:var(--fg); border-radius:999px; padding:9px 16px; font:inherit; font-size:15px; cursor:pointer;
+  }
+  .cart-btn:hover{border-color:var(--brass)}
+  .cart-count{background:var(--olive); color:var(--card); border-radius:999px; min-width:22px; height:22px; display:grid; place-items:center; font-size:13px; font-weight:600}
+  @media(max-width:820px){ nav{display:none} }
+
+  /* ---------- hero ---------- */
+  .hero{padding:70px 0 60px; border-bottom:1px solid var(--line)}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center}
+  .hero h1{font-size:clamp(38px,6vw,62px); letter-spacing:-.5px}
+  .hero p{max-width:46ch; color:var(--muted); font-size:18px; margin:18px 0 28px}
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap}
+  .btn{
+    display:inline-block; text-decoration:none; border:none; cursor:pointer; font:inherit; font-size:16px;
+    padding:13px 26px; border-radius:2px; transition:background .18s, color .18s;
+  }
+  .btn-main{background:var(--olive); color:var(--ivory)}
+  .btn-main:hover{background:var(--ink)}
+  :root[data-theme="dark"] .btn-main, :root:not([data-theme="light"]) .btn-main{color:#15180F}
+  .btn-ghost{background:transparent; color:var(--fg); border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--brass); color:var(--brass)}
+  .hero-note{display:flex; gap:26px; margin-top:34px; flex-wrap:wrap; font-size:14.5px; color:var(--muted)}
+  .hero-note b{display:block; font-family:"Amiri",serif; font-size:26px; color:var(--brass); font-weight:700}
+  .hero-art{background:var(--sand); border-radius:3px; padding:26px; box-shadow:var(--shadow)}
+  @media(max-width:860px){ .hero-grid{grid-template-columns:1fr; gap:34px} .hero{padding:44px 0} }
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0}
+  .head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:10px}
+  .head h2{font-size:clamp(28px,4vw,40px)}
+  .head p{color:var(--muted); margin:6px 0 0; max-width:52ch}
+
+  .filters{display:flex; gap:10px; flex-wrap:wrap; margin:28px 0 30px}
+  .chip{
+    border:1px solid var(--line); background:transparent; color:var(--muted); font:inherit; font-size:15px;
+    padding:8px 18px; border-radius:999px; cursor:pointer;
+  }
+  .chip:hover{color:var(--fg)}
+  .chip[aria-pressed="true"]{background:var(--olive); border-color:var(--olive); color:var(--ivory)}
+  :root[data-theme="dark"] .chip[aria-pressed="true"], :root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#15180F}
+
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px}
+  @media(max-width:900px){ .grid{grid-template-columns:repeat(2,1fr); gap:18px} }
+  @media(max-width:560px){ .grid{grid-template-columns:1fr} }
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:3px; overflow:hidden; display:flex; flex-direction:column}
+  .card .art{background:var(--sand); padding:18px; display:grid; place-items:center; aspect-ratio:4/3}
+  .card .body{padding:18px 18px 20px; display:flex; flex-direction:column; gap:6px; flex:1}
+  .card h3{font-size:22px}
+  .card .desc{color:var(--muted); font-size:14.5px; margin:0 0 4px}
+  .tagline{font-size:13px; color:var(--brass)}
+  .price{font-family:"Amiri",serif; font-size:25px; font-weight:700; margin-top:auto; padding-top:10px}
+  .price small{font-size:14px; color:var(--muted); font-family:inherit; font-weight:400}
+  .add{
+    margin-top:12px; width:100%; background:transparent; border:1px solid var(--olive-soft); color:var(--fg);
+    font:inherit; font-size:15.5px; padding:11px; border-radius:2px; cursor:pointer;
+  }
+  .add:hover{background:var(--olive); color:var(--ivory); border-color:var(--olive)}
+  :root[data-theme="dark"] .add:hover, :root:not([data-theme="light"]) .add:hover{color:#15180F}
+  .add.done{background:var(--brass); border-color:var(--brass); color:#15180F}
+
+  /* ---------- craft strip ---------- */
+  .craft{background:var(--sand)}
+  .craft-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:34px}
+  .craft h3{font-size:23px; margin-bottom:6px}
+  .craft p{color:var(--muted); margin:0; font-size:15.5px}
+  .rule{width:38px; height:2px; background:var(--brass); margin-bottom:14px}
+  @media(max-width:760px){ .craft-grid{grid-template-columns:1fr; gap:24px} }
+
+  /* ---------- custom order ---------- */
+  .custom-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start}
+  form{display:grid; gap:14px}
+  label{font-size:14.5px; color:var(--muted); display:block; margin-bottom:5px}
+  input,select,textarea{
+    width:100%; font:inherit; font-size:16px; padding:12px 14px; border-radius:2px;
+    border:1px solid var(--line); background:var(--card); color:var(--fg);
+  }
+  textarea{min-height:110px; resize:vertical}
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .form-msg{font-size:15px; color:var(--brass); min-height:24px}
+  @media(max-width:820px){ .custom-grid{grid-template-columns:1fr; gap:28px} .row{grid-template-columns:1fr} }
+
+  /* ---------- cart drawer ---------- */
+  .overlay{position:fixed; inset:0; background:rgba(15,18,12,.5); opacity:0; pointer-events:none; transition:opacity .25s; z-index:50}
+  .overlay.open{opacity:1; pointer-events:auto}
+  .drawer{
+    position:fixed; inset-block:0; inset-inline-start:0; width:min(420px,92vw); background:var(--bg);
+    border-inline-end:1px solid var(--line); transform:translateX(102%); transition:transform .3s ease; z-index:60;
+    display:flex; flex-direction:column; visibility:hidden;
+  }
+  .drawer.open{transform:translateX(0); visibility:visible}
+  @media(prefers-reduced-motion:reduce){ .drawer{transition:none} .overlay{transition:none} }
+  .drawer{transition:transform .3s ease, visibility 0s linear .3s}
+  .drawer.open{transition:transform .3s ease, visibility 0s}
+  .drawer header{position:static; background:none; backdrop-filter:none; padding:20px; display:flex; align-items:center; justify-content:space-between}
+  .drawer h2{font-size:26px}
+  .x{background:none; border:none; font-size:26px; line-height:1; color:var(--muted); cursor:pointer; padding:4px 8px}
+  .items{flex:1; overflow-y:auto; padding:0 20px}
+  .item{display:grid; grid-template-columns:56px 1fr auto; gap:12px; align-items:center; padding:14px 0; border-bottom:1px solid var(--line)}
+  .item .thumb{background:var(--sand); border-radius:2px; padding:6px; aspect-ratio:1; display:grid; place-items:center}
+  .item h4{margin:0; font-size:15.5px; font-weight:600}
+  .item .p{color:var(--muted); font-size:14px}
+  .qty{display:flex; align-items:center; gap:4px}
+  .qty button{width:28px; height:28px; border:1px solid var(--line); background:transparent; color:var(--fg); border-radius:2px; cursor:pointer; font-size:16px; line-height:1}
+  .qty button:hover{border-color:var(--brass); color:var(--brass)}
+  .qty span{min-width:24px; text-align:center; font-size:15px}
+  .empty{padding:50px 4px; color:var(--muted); text-align:center}
+  .foot{padding:20px; border-top:1px solid var(--line); display:grid; gap:12px}
+  .total{display:flex; justify-content:space-between; align-items:baseline; font-family:"Amiri",serif; font-size:24px; font-weight:700}
+  .wa{background:#1f7a4d; color:#fff; text-align:center; text-decoration:none; padding:14px; border-radius:2px; font-size:16.5px; border:none; font-family:inherit; cursor:pointer}
+  .wa:hover{background:#186039}
+  .close-cart{
+    background:transparent; border:1px solid var(--line); color:var(--fg); font:inherit; font-size:15.5px;
+    padding:12px; border-radius:2px; cursor:pointer;
+  }
+  .close-cart:hover{border-color:var(--brass); color:var(--brass)}
+  .x{border:1px solid var(--line); border-radius:2px; width:36px; height:36px; display:grid; place-items:center}
+  .x:hover{border-color:var(--brass); color:var(--brass)}
+  .fine{font-size:13px; color:var(--muted); text-align:center; margin:0}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink); color:var(--sand); padding:56px 0 30px}
+  :root[data-theme="dark"] footer, :root:not([data-theme="light"]) footer{background:#0F1209; color:var(--sand)}
+  .f-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:34px}
+  footer h3{font-size:21px; margin-bottom:10px; color:var(--brass-lit)}
+  footer p,footer li{color:rgba(226,218,199,.72); font-size:15px}
+  footer ul{list-style:none; padding:0; margin:0; display:grid; gap:7px}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--brass-lit)}
+  .copy{border-top:1px solid rgba(226,218,199,.18); margin-top:38px; padding-top:18px; font-size:13.5px; color:rgba(226,218,199,.55); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap}
+  @media(max-width:760px){ .f-grid{grid-template-columns:1fr; gap:26px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Aura<span> Home</span></a>
+    <nav>
+      <a href="#pieces">القطع</a>
+      <a href="#craft">الصناعة</a>
+      <a href="#custom">تفصيل خاص</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+    <button class="cart-btn" id="openCart" style="margin-inline-start:auto">
+      السلة <span class="cart-count" id="count">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>أثاث دمياطي يتعمل بالإيد، ويفضل عندك عمر كامل</h1>
+        <p>ورشة صغيرة في دمياط بتشتغل زان وجوز مجفّف، بتشطيب يدوي وتفصيل على المقاس. بنسلّم لحد باب البيت في كل محافظات مصر.</p>
+        <div class="hero-actions">
+          <a class="btn btn-main" href="#pieces">اتفرج على القطع</a>
+          <a class="btn btn-ghost" href="#custom">اطلب تفصيل بمقاسك</a>
+        </div>
+        <div class="hero-note">
+          <div><b>٣٢</b> سنة في المهنة</div>
+          <div><b>٥ سنين</b> ضمان على الهيكل</div>
+          <div><b>٢٥ يوم</b> متوسط مدة التنفيذ</div>
+        </div>
+      </div>
+      <div class="hero-art" id="heroArt"></div>
+    </div>
+  </div>
+
+  <section id="pieces">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <h2>القطع المتاحة</h2>
+          <p>الأسعار شاملة الخشب والتنجيد والتشطيب. النقل والتركيب بيتحسبوا حسب المحافظة.</p>
+        </div>
+      </div>
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="craft" id="craft">
+    <div class="wrap craft-grid">
+      <div>
+        <div class="rule"></div>
+        <h3>خشب مجفّف قبل ما يتقص</h3>
+        <p>الزان بيقعد في فرن التجفيف لحد ما الرطوبة توصل ٨٪. ده اللي بيمنع القطعة إنها تتقوّس أو تفرقع بعد سنة.</p>
+      </div>
+      <div>
+        <div class="rule"></div>
+        <h3>تجميع بالنقر واللسان</h3>
+        <p>الوصلات بتتحفر في الخشب نفسه مش بمسامير. أقوى، وبتفضل ثابتة حتى لو القطعة اتفكّت واترّكبت تاني.</p>
+      </div>
+      <div>
+        <div class="rule"></div>
+        <h3>تشطيب على ٧ وشوش</h3>
+        <p>سنفرة ودهان طبقة ورا طبقة بإيد الصنايعي، مش رش سريع. الملمس بيبان في النور، وده اللي بيفرق.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="custom">
+    <div class="wrap custom-grid">
+      <div>
+        <h2 style="font-size:clamp(28px,4vw,40px)">عندك مساحة غريبة؟ ابعتلنا مقاسها</h2>
+        <p style="color:var(--muted)">ركنة بزاوية مش قايمة، دولاب لحد السقف، مكتبة جوه نيشة… ابعت المقاسات وصورة للمكان، ونرجعلك برسم وسعر خلال ٤٨ ساعة. المعاينة في دمياط والمنصورة مجانية.</p>
+        <p style="color:var(--muted)">كل طلب تفصيل بيتعمله رسم أبعاد قبل ما يدخل الورشة، ومبنبدأش قبل ما توافق عليه.</p>
+      </div>
+      <form id="customForm" novalidate>
+        <div>
+          <label for="name">الاسم</label>
+          <input id="name" name="name" required>
+        </div>
+        <div class="row">
+          <div>
+            <label for="phone">رقم الموبايل</label>
+            <input id="phone" name="phone" inputmode="tel" required>
+          </div>
+          <div>
+            <label for="city">المحافظة</label>
+            <input id="city" name="city" required>
+          </div>
+        </div>
+        <div>
+          <label for="type">القطعة المطلوبة</label>
+          <select id="type" name="type">
+            <option>غرفة نوم</option>
+            <option>ركنة أو انتريه</option>
+            <option>سفرة</option>
+            <option>دولاب أو مكتبة</option>
+            <option>قطعة مفردة</option>
+          </select>
+        </div>
+        <div>
+          <label for="details">المقاسات وأي تفاصيل</label>
+          <textarea id="details" name="details" placeholder="مثال: ركنة ٣٢٠ × ٢٢٠ سم، قماش فاتح، مكان الزاوية على الشمال"></textarea>
+        </div>
+        <button class="btn btn-main" type="submit">ابعت الطلب</button>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <h3>Aura</h3>
+        <p>ورشة ومعرض أثاث في دمياط. بنشتغل بالطلب، وبنسلّم لحد باب البيت في كل المحافظات.</p>
+      </div>
+      <div>
+        <h3>المعرض</h3>
+        <ul>
+          <li>شارع الجلاء، وسط البلد — دمياط</li>
+          <li>يوميًا من ١١ ص لـ ١٠ م (الجمعة مقفول)</li>
+          <li><a href="tel:+201000000000">٠١٠٠٠٠٠٠٠٠٠</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>الطلب والتسليم</h3>
+        <ul>
+          <li>مقدم ٤٠٪ لبدء التنفيذ</li>
+          <li>الباقي عند الاستلام</li>
+          <li>تركيب مجاني داخل دمياط</li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© ٢٠٢٦ Aura</span>
+      <span>غيّر رقم الواتساب والعنوان من الكود قبل ما تنشر الموقع</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="سلة المشتريات" aria-hidden="true">
+  <header>
+    <h2>السلة</h2>
+    <button class="x" id="closeCart" aria-label="إغلاق السلة">&times;</button>
+  </header>
+  <div class="items" id="items"></div>
+  <div class="foot">
+    <p class="total" style="font-size:15px;font-weight:400;color:var(--muted);font-family:inherit">الأسعار المحددة هتبان جنب كل منتج، والباقي بيتحدد بعد المعاينة</p>
+    <button class="wa" id="waBtn">أكمل الطلب على واتساب</button>
+    <button class="close-cart" id="closeCart2">اقفل السلة وكمّل تسوّق</button>
+    <p class="fine">هنراجع الطلب ونأكدلك المواعيد والنقل قبل أي دفع.</p>
+  </div>
+</aside>
+
+<script>
+/* ======= غيّر الرقم ده لرقم الواتساب بتاعك (بكود الدولة من غير +) ======= */
+const WHATSAPP = "201003827206";
+
+const ART = {
+  sofa:`<svg viewBox="0 0 200 150" role="img" aria-label="كنبة"><rect x="18" y="60" width="164" height="46" rx="8" fill="var(--fabric)"/><rect x="30" y="42" width="140" height="30" rx="7" fill="var(--fabric)" opacity=".75"/><rect x="10" y="52" width="24" height="54" rx="8" fill="var(--wood-2)"/><rect x="166" y="52" width="24" height="54" rx="8" fill="var(--wood-2)"/><rect x="26" y="106" width="9" height="16" rx="3" fill="var(--wood-1)"/><rect x="165" y="106" width="9" height="16" rx="3" fill="var(--wood-1)"/><path d="M100 46v26" stroke="var(--wood-2)" stroke-width="2" opacity=".4"/></svg>`,
+  corner:`<svg viewBox="0 0 200 150" role="img" aria-label="ركنة"><rect x="16" y="44" width="42" height="62" rx="8" fill="var(--fabric)" opacity=".75"/><rect x="16" y="76" width="168" height="30" rx="8" fill="var(--fabric)"/><rect x="58" y="58" width="126" height="24" rx="7" fill="var(--fabric)" opacity=".75"/><rect x="170" y="66" width="20" height="40" rx="7" fill="var(--wood-2)"/><rect x="24" y="106" width="9" height="15" rx="3" fill="var(--wood-1)"/><rect x="168" y="106" width="9" height="15" rx="3" fill="var(--wood-1)"/></svg>`,
+  bed:`<svg viewBox="0 0 200 150" role="img" aria-label="سرير"><rect x="22" y="30" width="60" height="76" rx="6" fill="var(--wood-2)"/><rect x="34" y="42" width="36" height="52" rx="4" fill="var(--fabric)" opacity=".8"/><rect x="22" y="76" width="158" height="26" rx="5" fill="var(--wood-1)"/><rect x="82" y="64" width="90" height="16" rx="5" fill="#EDE7DA"/><rect x="170" y="62" width="10" height="44" rx="4" fill="var(--wood-2)"/><rect x="28" y="102" width="9" height="16" rx="3" fill="var(--wood-2)"/><rect x="166" y="102" width="9" height="16" rx="3" fill="var(--wood-2)"/></svg>`,
+  bedClassic:`<svg viewBox="0 0 200 150" role="img" aria-label="سرير كلاسيك"><path d="M24 40q34-24 68 0v66H24z" fill="var(--wood-2)"/><path d="M36 50q26-16 44 0v40H36z" fill="var(--metal)" opacity=".55"/><rect x="24" y="76" width="156" height="26" rx="4" fill="var(--wood-1)"/><rect x="82" y="64" width="88" height="16" rx="5" fill="#EDE7DA"/><path d="M168 58q10-10 14 0v48h-14z" fill="var(--wood-2)"/><rect x="28" y="102" width="10" height="16" rx="3" fill="var(--metal)"/><rect x="164" y="102" width="10" height="16" rx="3" fill="var(--metal)"/></svg>`,
+  dining:`<svg viewBox="0 0 200 150" role="img" aria-label="سفرة"><rect x="20" y="62" width="160" height="12" rx="4" fill="var(--wood-1)"/><rect x="34" y="74" width="9" height="34" rx="3" fill="var(--wood-2)"/><rect x="157" y="74" width="9" height="34" rx="3" fill="var(--wood-2)"/><rect x="43" y="88" width="114" height="7" rx="3" fill="var(--wood-2)" opacity=".7"/><rect x="52" y="34" width="22" height="30" rx="5" fill="var(--fabric)"/><rect x="90" y="34" width="22" height="30" rx="5" fill="var(--fabric)"/><rect x="128" y="34" width="22" height="30" rx="5" fill="var(--fabric)"/></svg>`,
+  coffee:`<svg viewBox="0 0 200 150" role="img" aria-label="ترابيزة قهوة"><rect x="34" y="58" width="132" height="13" rx="5" fill="var(--wood-1)"/><rect x="46" y="71" width="8" height="30" rx="3" fill="var(--wood-2)"/><rect x="146" y="71" width="8" height="30" rx="3" fill="var(--wood-2)"/><rect x="54" y="82" width="92" height="8" rx="3" fill="var(--wood-2)" opacity=".6"/><circle cx="100" cy="48" r="9" fill="var(--fabric)" opacity=".8"/></svg>`,
+  tv:`<svg viewBox="0 0 200 150" role="img" aria-label="وحدة تلفزيون"><rect x="24" y="72" width="152" height="34" rx="5" fill="var(--wood-1)"/><rect x="36" y="82" width="52" height="16" rx="3" fill="var(--wood-2)" opacity=".7"/><rect x="112" y="82" width="52" height="16" rx="3" fill="var(--wood-2)" opacity=".7"/><rect x="60" y="34" width="80" height="34" rx="3" fill="var(--wood-2)"/><rect x="66" y="40" width="68" height="22" rx="2" fill="var(--fabric)" opacity=".55"/></svg>`,
+  wardrobe:`<svg viewBox="0 0 200 150" role="img" aria-label="دولاب"><rect x="46" y="24" width="108" height="94" rx="4" fill="var(--wood-1)"/><path d="M100 24v94" stroke="var(--wood-2)" stroke-width="3"/><rect x="54" y="34" width="38" height="74" rx="3" fill="var(--wood-2)" opacity=".45"/><rect x="108" y="34" width="38" height="74" rx="3" fill="var(--wood-2)" opacity=".45"/><circle cx="94" cy="72" r="3" fill="var(--metal)"/><circle cx="106" cy="72" r="3" fill="var(--metal)"/></svg>`,
+  armchair:`<svg viewBox="0 0 200 150" role="img" aria-label="فوتيه"><rect x="66" y="40" width="68" height="40" rx="9" fill="var(--fabric)" opacity=".78"/><rect x="60" y="72" width="80" height="28" rx="7" fill="var(--fabric)"/><rect x="48" y="58" width="18" height="42" rx="7" fill="var(--wood-2)"/><rect x="134" y="58" width="18" height="42" rx="7" fill="var(--wood-2)"/><rect x="60" y="100" width="8" height="16" rx="3" fill="var(--wood-1)"/><rect x="132" y="100" width="8" height="16" rx="3" fill="var(--wood-1)"/></svg>`,
+  dresser:`<svg viewBox="0 0 200 150" role="img" aria-label="تسريحة"><rect x="56" y="18" width="88" height="54" rx="26" fill="var(--metal)" opacity=".4"/><rect x="64" y="26" width="72" height="46" rx="22" fill="var(--fabric)" opacity=".35"/><rect x="44" y="76" width="112" height="30" rx="4" fill="var(--wood-1)"/><path d="M100 76v30" stroke="var(--wood-2)" stroke-width="2" opacity=".6"/><circle cx="76" cy="91" r="3" fill="var(--metal)"/><circle cx="124" cy="91" r="3" fill="var(--metal)"/><rect x="50" y="106" width="8" height="14" rx="3" fill="var(--wood-2)"/><rect x="142" y="106" width="8" height="14" rx="3" fill="var(--wood-2)"/></svg>`,
+  desk:`<svg viewBox="0 0 200 150" role="img" aria-label="مكتب"><rect x="28" y="60" width="144" height="12" rx="4" fill="var(--wood-1)"/><rect x="34" y="72" width="46" height="34" rx="4" fill="var(--wood-2)"/><rect x="42" y="80" width="30" height="7" rx="2" fill="var(--metal)" opacity=".5"/><rect x="42" y="92" width="30" height="7" rx="2" fill="var(--metal)" opacity=".5"/><rect x="160" y="72" width="9" height="34" rx="3" fill="var(--wood-2)"/><rect x="104" y="40" width="34" height="20" rx="3" fill="var(--fabric)" opacity=".6"/></svg>`,
+  cTable:`<svg viewBox="0 0 200 150" role="img" aria-label="ترابيزة سي شكل"><ellipse cx="70" cy="46" rx="46" ry="12" fill="var(--wood-1)"/><path d="M96 48 h14 a10 10 0 0 1 10 10 v50" stroke="var(--ink)" stroke-width="9" fill="none" stroke-linecap="round" opacity=".85"/><ellipse cx="130" cy="118" rx="46" ry="11" fill="var(--ink)" opacity=".85"/><circle cx="150" cy="118" r="2.4" fill="var(--metal)"/></svg>`,
+  tiered:`<svg viewBox="0 0 200 150" role="img" aria-label="ترابيزة ثلاث طبقات"><ellipse cx="100" cy="34" rx="44" ry="11" fill="var(--wood-1)"/><ellipse cx="100" cy="76" rx="34" ry="9" fill="var(--wood-2)" opacity=".85"/><ellipse cx="100" cy="112" rx="26" ry="7" fill="var(--wood-2)" opacity=".7"/><rect x="60" y="34" width="6" height="86" fill="var(--ink)" opacity=".8"/><rect x="134" y="34" width="6" height="86" fill="var(--ink)" opacity=".8"/><rect x="97" y="34" width="6" height="86" fill="var(--ink)" opacity=".6"/></svg>`,
+  keyRack:`<svg viewBox="0 0 200 150" role="img" aria-label="شماعة مفاتيح"><rect x="30" y="20" width="140" height="90" rx="6" fill="var(--wood-1)"/><rect x="38" y="44" width="124" height="16" rx="4" fill="var(--wood-2)" opacity=".55"/><circle cx="55" cy="90" r="5" fill="var(--metal)"/><circle cx="85" cy="90" r="5" fill="var(--metal)"/><circle cx="115" cy="90" r="5" fill="var(--metal)"/><circle cx="145" cy="90" r="5" fill="var(--metal)"/><circle cx="55" cy="104" r="7" fill="none" stroke="var(--ink)" stroke-width="2" opacity=".5"/><circle cx="115" cy="106" r="7" fill="none" stroke="var(--ink)" stroke-width="2" opacity=".5"/></svg>`,
+  chairModern:`<svg viewBox="0 0 200 150" role="img" aria-label="كرسي مودرن"><path d="M70 26 q30-14 60 0 q10 30-8 56 h-44 q-18-26-8-56z" fill="var(--fabric)" opacity=".85"/><line x1="76" y1="82" x2="58" y2="128" stroke="var(--wood-1)" stroke-width="5" stroke-linecap="round"/><line x1="124" y1="82" x2="142" y2="128" stroke="var(--wood-1)" stroke-width="5" stroke-linecap="round"/><line x1="86" y1="88" x2="76" y2="128" stroke="var(--wood-1)" stroke-width="5" stroke-linecap="round"/><line x1="114" y1="88" x2="124" y2="128" stroke="var(--wood-1)" stroke-width="5" stroke-linecap="round"/><line x1="66" y1="100" x2="134" y2="100" stroke="var(--ink)" stroke-width="2" opacity=".35"/></svg>`,
+  nesting:`<svg viewBox="0 0 200 150" role="img" aria-label="ترابيزات متداخلة"><ellipse cx="150" cy="76" rx="42" ry="11" fill="var(--wood-2)"/><rect x="130" y="76" width="6" height="34" fill="var(--wood-1)"/><rect x="164" y="76" width="6" height="34" fill="var(--wood-1)"/><ellipse cx="90" cy="92" rx="42" ry="11" fill="var(--wood-1)"/><rect x="70" y="92" width="6" height="34" fill="var(--wood-2)"/><rect x="104" y="92" width="6" height="34" fill="var(--wood-2)"/><ellipse cx="40" cy="66" rx="30" ry="8" fill="var(--fabric)" opacity=".6"/><rect x="24" y="66" width="5" height="26" fill="var(--wood-1)"/><rect x="52" y="66" width="5" height="26" fill="var(--wood-1)"/></svg>`
+};
+
+const PRODUCTS = [
+  {id:1, name:"غرفة نوم نيل", cat:"غرف نوم", art:"bed", desc:"سرير ١٨٠ سم، دولاب ٤ ضلف، كومودينو وتسريحة. زان مصري بتشطيب مط.", tag:"الأكثر طلبًا"},
+  {id:2, name:"غرفة نوم زهرة", cat:"غرف نوم", art:"bedClassic", desc:"كلاسيك محفور بالإيد مع ماء ذهب على الحواف. تشطيب لميع.", tag:"محفورة بالإيد"},
+  {id:3, name:"ركنة سرايا", cat:"ركنات وانتريهات", art:"corner", desc:"٣٢٠ × ٢٢٠ سم، قماش كتان مقاوم للبقع، إسفنج عالي الكثافة."},
+  {id:4, name:"كنبة صفصاف", cat:"ركنات وانتريهات", art:"sofa", desc:"٣ مقاعد بقاعدة زان ظاهرة. متاحة بـ ٦ ألوان قماش.", tag:"تسليم خلال أسبوع"},
+  {id:5, name:"فوتيه دمياط", cat:"قطع مفردة", art:"armchair", desc:"فوتيه بمسند ظهر عالي وأرجل زان مخروطة."},
+  {id:6, name:"سفرة الميدان", cat:"سفرة", art:"dining", desc:"ترابيزة ٢٢٠ سم مع ٨ كراسي منجّدة وبوفيه منفصل."},
+  {id:7, name:"ترابيزة قهوة جوز", cat:"قطع مفردة", art:"coffee", desc:"١١٠ × ٦٠ سم برف تحتي. خشب جوز بزيت طبيعي."},
+  {id:8, name:"وحدة تلفزيون أفق", cat:"دواليب ومكتبات", art:"tv", desc:"٢٤٠ سم بأدراج انزلاق هادي ومخرج سلوك."},
+  {id:9, name:"دولاب ٤ ضلفة", cat:"دواليب ومكتبات", art:"wardrobe", desc:"لحد السقف بمرايا داخلية وأرفف قابلة للتعديل."},
+  {id:10, name:"تسريحة لؤلؤة", cat:"قطع مفردة", art:"dresser", desc:"مرايا بيضاوية بإطار مذهّب ودرجين واسعين."},
+  {id:11, name:"مكتب شغل بيت", cat:"دواليب ومكتبات", art:"desk", desc:"١٤٠ سم بدرج جانبي ومساحة للكابلات."},
+  {id:12, name:"انتريه بلدي", cat:"ركنات وانتريهات", art:"sofa", desc:"كنبتين وفوتيهين بحفر بسيط على الظهر."},
+  {id:13, name:"ترابيزة C جانبية", cat:"قطع مفردة", art:"cTable", desc:"قاعدة معدنية سوداء تدخل تحت الكنبة، سطح خشبي بيضاوي مناسب للاب توب والقهوة."},
+  {id:14, name:"ترابيزة ثلاث طبقات", cat:"قطع مفردة", art:"tiered", desc:"أرفف دائرية متدرجة بأرجل معدنية سودا، مساحة تخزين إضافية جنب الكنبة."},
+  {id:15, name:"شماعة مفاتيح بالرف", cat:"قطع مفردة", art:"keyRack", desc:"لوح خشبي بشماعتين ورف علوي للمفاتيح والإكسسوارات عند الباب.", tag:"مقاس صغير"},
+  {id:16, name:"كرسي مودرن سكاندنافي", cat:"سفرة", art:"chairModern", desc:"مقعد بلاستيك مقوّى بأرجل زان خشبية، مناسب للسفرة أو ركن القراءة."},
+  {id:17, name:"سِت ترابيزات متداخلة", cat:"قطع مفردة", art:"nesting", desc:"٣ ترابيزات بمقاسات متدرجة تتلم تحت بعض، خشب طبيعي بأرجل مخروطية."},
+  {id:18, name:"مكتب أبيض مودرن", cat:"دواليب ومكتبات", img:"data:image/jpeg;base64,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", price:1900, desc:"مكتب سطح أبيض بأرجل خشب زان مصقولة، تصميم بسيط يناسب غرفة النوم أو ركن المكتب.", tag:"صورة حقيقية للمنتج"},
+];
+
+const CATS = ["الكل", ...new Set(PRODUCTS.map(p => p.cat))];
+const money = n => n.toLocaleString("ar-EG") + " ج.م";
+
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem("cart") || "{}") || {}; } catch(e) { cart = {}; }
+const save = () => { try { localStorage.setItem("cart", JSON.stringify(cart)); } catch(e){} };
+
+document.getElementById("heroArt").innerHTML = ART.corner;
+
+const filtersEl = document.getElementById("filters");
+let active = "الكل";
+CATS.forEach(c => {
+  const b = document.createElement("button");
+  b.className = "chip"; b.textContent = c;
+  b.setAttribute("aria-pressed", c === active);
+  b.onclick = () => {
+    active = c;
+    [...filtersEl.children].forEach(x => x.setAttribute("aria-pressed", x.textContent === c));
+    renderGrid();
+  };
+  filtersEl.appendChild(b);
+});
+
+function renderGrid(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  PRODUCTS.filter(p => active === "الكل" || p.cat === active).forEach(p => {
+    const el = document.createElement("article");
+    el.className = "card";
+    el.innerHTML = `
+      <div class="art">${p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain">` : ART[p.art]}</div>
+      <div class="body">
+        ${p.tag ? `<div class="tagline">${p.tag}</div>` : ""}
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="price">${p.price ? money(p.price) + ' <small>شامل التشطيب</small>' : 'السعر حسب الطلب <small>يتحدد بعد المعاينة</small>'}</div>
+        <button class="add" data-id="${p.id}">أضف للسلة</button>
+      </div>`;
+    grid.appendChild(el);
+  });
+  grid.querySelectorAll(".add").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.dataset.id;
+      cart[id] = (cart[id] || 0) + 1;
+      save(); renderCart();
+      btn.textContent = "اتضاف ✓"; btn.classList.add("done");
+      setTimeout(() => { btn.textContent = "أضف للسلة"; btn.classList.remove("done"); }, 1400);
+    };
+  });
+}
+renderGrid();
+
+function renderCart(){
+  const items = document.getElementById("items");
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  let n = 0;
+  items.innerHTML = "";
+  if(!ids.length){
+    items.innerHTML = `<p class="empty">السلة فاضية. اختار قطعة من المعرض وهتلاقيها هنا.</p>`;
+  }
+  ids.forEach(id => {
+    const p = PRODUCTS.find(x => x.id == id); if(!p) return;
+    const q = cart[id]; n += q;
+    const row = document.createElement("div");
+    row.className = "item";
+    row.innerHTML = `
+      <div class="thumb">${p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain">` : ART[p.art]}</div>
+      <div><h4>${p.name}</h4><div class="p">${p.price ? money(p.price) : 'السعر حسب الطلب'}</div></div>
+      <div class="qty">
+        <button data-m="-1" data-id="${id}" aria-label="أقل">−</button>
+        <span>${q.toLocaleString("ar-EG")}</span>
+        <button data-m="1" data-id="${id}" aria-label="أكتر">+</button>
+      </div>`;
+    items.appendChild(row);
+  });
+  items.querySelectorAll("[data-m]").forEach(b => {
+    b.onclick = () => {
+      const id = b.dataset.id;
+      cart[id] = Math.max(0, (cart[id] || 0) + Number(b.dataset.m));
+      if(!cart[id]) delete cart[id];
+      save(); renderCart();
+    };
+  });
+  document.getElementById("count").textContent = n.toLocaleString("ar-EG");
+}
+renderCart();
+
+const drawer = document.getElementById("drawer"), overlay = document.getElementById("overlay");
+const setCart = open => {
+  drawer.classList.toggle("open", open);
+  overlay.classList.toggle("open", open);
+  drawer.setAttribute("aria-hidden", !open);
+  if(open) document.getElementById("closeCart").focus();
+};
+document.getElementById("openCart").onclick = () => setCart(true);
+document.getElementById("closeCart").onclick = () => setCart(false);
+document.getElementById("closeCart2").onclick = () => setCart(false);
+overlay.onclick = () => setCart(false);
+document.addEventListener("keydown", e => { if(e.key === "Escape") setCart(false); });
+
+document.getElementById("waBtn").onclick = () => {
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  if(!ids.length){ document.querySelector(".empty")?.scrollIntoView(); return; }
+  let subtotal = 0, hasPriced = false, hasUnpriced = false;
+  const lines = ids.map(id => {
+    const p = PRODUCTS.find(x => x.id == id);
+    if(p.price){
+      hasPriced = true;
+      subtotal += p.price * cart[id];
+      return `• ${p.name} × ${cart[id]} — ${money(p.price * cart[id])}`;
+    }
+    hasUnpriced = true;
+    return `• ${p.name} × ${cart[id]} — السعر حسب الطلب`;
+  });
+  let msg = `السلام عليكم، حابب أطلب من الموقع:\n\n${lines.join("\n")}`;
+  if(hasPriced) msg += `\n\nإجمالي القطع المسعّرة: ${money(subtotal)}`;
+  if(hasUnpriced) msg += `\n\nوباقي القطع محتاجة تسعير حسب الطلب.`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+};
+
+document.getElementById("customForm").onsubmit = e => {
+  e.preventDefault();
+  const f = e.target, msg = document.getElementById("formMsg");
+  if(!f.name.value.trim() || !f.phone.value.trim()){
+    msg.textContent = "اكتب الاسم ورقم الموبايل عشان نقدر نرد عليك."; return;
+  }
+  const text = `طلب تفصيل\nالاسم: ${f.name.value}\nالموبايل: ${f.phone.value}\nالمحافظة: ${f.city.value}\nالقطعة: ${f.type.value}\nالتفاصيل: ${f.details.value || "—"}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+  msg.textContent = "فتحنا لك واتساب بالطلب — ابعته وهنرد خلال ٤٨ ساعة.";
+  f.reset();
+};
+</script>
+</body>
+</html>
